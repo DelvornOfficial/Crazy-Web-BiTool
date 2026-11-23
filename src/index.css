@@ -1,0 +1,139 @@
+/* ==========================================================================
+   Global Styles - NEXT LEVEL CHEAT (Pure White Theme + Monospace Font)
+   Theme: Pure White Canvas + Dot-Matrix Texture + Chromium Black Accents
+   Font: JetBrains Mono / Space Mono / Consolas Monospace Throughout
+   Path: src/index.css
+   ========================================================================== */
+
+/* Central Imports */
+@import './App.css';
+@import './component/hero/Hero.css';
+
+:root {
+  /* Pure White Canvas */
+  --bg-page: #ffffff;
+  --bg-surface: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-subtle: #f1f5f9;
+
+  /* Chromium Black & Charcoal */
+  --chromium-black: #0a0a0c;
+  --chromium-card: #121318;
+  --chromium-surface: #181920;
+  --chromium-border: #22232d;
+  --border-light: #e2e8f0;
+  --border-medium: #cbd5e1;
+  --border-dark: #0a0a0c;
+
+  /* Text Palettes */
+  --text-dark: #09090b;
+  --text-secondary: #3f3f46;
+  --text-muted: #71717a;
+  --pure-white: #ffffff;
+  --milk-white: #fafafa;
+
+  /* Accents */
+  --accent-purple: #7c3aed;
+  --accent-cyan: #0284c7;
+
+  /* Monospace Typography */
+  --mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  --heading-font: 'JetBrains Mono', ui-monospace, monospace;
+
+  font-family: var(--mono);
+  color-scheme: light;
+  color: var(--text-dark);
+  background-color: #ffffff;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100dvh;
+  background-color: #ffffff;
+  /* Authentic Dot-Matrix Grid Texture on Pure White Canvas */
+  background-image:
+    radial-gradient(rgba(10, 10, 12, 0.16) 1.5px, transparent 1.5px),
+    radial-gradient(ellipse 85% 60% at 50% 0%, rgba(124, 58, 237, 0.06), transparent 75%);
+  background-size: 24px 24px, 100% 100%;
+  background-attachment: fixed;
+  color: var(--text-dark);
+  overflow-x: clip;
+}
+
+#root {
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--mono);
+  color: var(--text-dark);
+  margin: 0;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+p {
+  margin: 0;
+  font-family: var(--mono);
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: var(--mono);
+}
+
+/* ==========================================================================
+   High-Precision Skeleton Shimmer Effect
+   ========================================================================== */
+.skeleton-line,
+.skeleton-box,
+.skeleton-shimmer {
+  display: inline-block;
+  background: #e2e8f0;
+  background-image: linear-gradient(
+    90deg,
+    rgba(226, 232, 240, 0.7) 0%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(226, 232, 240, 0.7) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: 6px;
+  animation: shimmerFlow 1.6s ease-in-out infinite;
+  vertical-align: middle;
+  pointer-events: none;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+@keyframes shimmerFlow {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>बी - TOOL - CRM Admin Console</title>
+  <link rel="stylesheet" href="/static/admin/admin.css?v=4.0.0">
+  <link rel="icon" type="image/png" href="/static/admin/logo.png?v=3.5.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- VIEW 1: Login -->
+  <div id="loginSection" class="login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <span class="login-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          Restricted CRM Access
+        </span>
+        <h1>बी - TOOL Console</h1>
+        <p>Anti-Brute Force Protected • Zero SQL Injection</p>
+      </div>
+
+      <div id="loginAlert" class="alert-box alert-danger"></div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label for="usernameInput">Administrator Username</label>
+          <input type="text" id="usernameInput" class="input-field" placeholder="admin" required autocomplete="username"
+            pattern="^[a-zA-Z0-9_\-\.]{3,32}$" title="Alphanumeric, underscores, hyphens only (3-32 chars)">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label for="passwordInput">Security Passphrase</label>
+          <div style="position: relative; display: flex; align-items: center;">
+            <input type="password" id="passwordInput" class="input-field"
+              placeholder="Enter password (e.g. xivam@78086)" required autocomplete="current-password" minlength="3"
+              style="padding-right: 2.8rem;">
+            <button type="button" onclick="togglePasswordVisibility()"
+              style="position: absolute; right: 8px; background: transparent; border: none; color: #64748b; cursor: pointer; padding: 6px; display: flex; align-items: center;"
+              title="Show/Hide Password" aria-label="Toggle Password Visibility">
+              <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="loginBtn" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+            <polyline points="10 17 15 12 10 7"></polyline>
+            <line x1="15" y1="12" x2="3" y2="12"></line>
+          </svg>
+          Authenticate Securely
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- VIEW 2: CRM Layout -->
+  <div id="dashboardSection" class="crm-layout" style="display: none;">
+    <!-- LEFT SIDEBAR -->
+    <aside class="crm-sidebar" id="crmSidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">
+          <div class="bi-admin-logo-wrap">
+            <svg viewBox="0 0 100 100" class="bi-admin-logo-svg" fill="currentColor">
+              <rect class="bar bar-1" x="17" y="34" width="10" height="26" rx="5" />
+              <rect class="bar bar-2" x="29" y="22" width="10" height="50" rx="5" />
+              <rect class="bar bar-3" x="43" y="10" width="10" height="74" rx="5" />
+              <rect class="bar bar-4" x="57" y="22" width="10" height="50" rx="5" />
+              <rect class="bar bar-5" x="69" y="34" width="10" height="26" rx="5" />
+            </svg>
+          </div>
+          <div>
+            <div class="sidebar-brand-text">बी - TOOL</div>
+            <div style="font-size:0.75rem; color:#64748b; font-weight:600;">CRM CONTROL</div>
+          </div>
+        </div>
+        <span class="sidebar-badge">v2.4</span>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <div class="nav-category">Main Dashboard</div>
+
+        <button type="button" class="sidebar-btn active" data-tab="releasesTab" onclick="switchTab('releasesTab')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+            </path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+          APK Releases
+        </button>
+
+        <button type="button" class="sidebar-btn" data-tab="videoTab" onclick="switchTab('videoTab')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="23 7 16 12 23 17 23 7"></polygon>
+            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+          </svg>
+          Showcase Videos
+        </button>
+
+        <button type="button" class="sidebar-btn" data-tab="featuresTab" onclick="switchTab('featuresTab')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+            </polygon>
+          </svg>
+          App Features
+        </button>
+
+        <button type="button" class="sidebar-btn" data-tab="faqsTab" onclick="switchTab('faqsTab')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          FAQ Management
+        </button>
+
+        <div class="nav-category">Security & Analytics</div>
+
+        <button type="button" class="sidebar-btn" data-tab="analyticsTab" onclick="switchTab('analyticsTab')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          Live Traffic Graph
+        </button>
+
+        <button type="button" class="sidebar-btn" data-tab="seoTab" onclick="switchTab('seoTab')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          SEO Engine
+        </button>
+
+        <button type="button" class="sidebar-btn" data-tab="highRiskTab" onclick="switchTab('highRiskTab')"
+          style="color:var(--danger-text);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          HIGH RISK (Bot &amp; Backup)
+        </button>
+
+        <div class="nav-category">Management & Settings</div>
+
+        <button type="button" class="sidebar-btn" data-tab="settingsTab" onclick="switchTab('settingsTab')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+            </path>
+          </svg>
+          Site & Telegram
+        </button>
+
+        <button type="button" class="sidebar-btn" data-tab="auditsTab" onclick="switchTab('auditsTab')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          Security Audits
+        </button>
+
+        <button type="button" class="sidebar-btn" data-tab="unlockTab" onclick="switchTab('unlockTab')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+          </svg>
+          Unlock Account
+        </button>
+      </nav>
+
+      <!-- Sidebar User Footer -->
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar" id="avatarLetter">A</div>
+          <div class="user-details">
+            <span class="user-name" id="currentAdminName">admin</span>
+            <span class="user-role-badge" id="currentAdminRole">SUPERADMIN</span>
+          </div>
+        </div>
+        <button type="button" class="btn-icon-logout" onclick="handleLogout()" title="Sign Out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- RIGHT MAIN CANVAS -->
+    <main class="crm-main">
+      <!-- Topbar Header -->
+      <header class="crm-topbar">
+        <div class="topbar-left">
+          <button type="button" class="mobile-menu-toggle" onclick="toggleSidebar()" aria-label="Toggle Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <h2 class="topbar-title" id="pageTitle">Release Management (APK)</h2>
+        </div>
+        <div class="topbar-right">
+          <div class="live-pill">
+            <span class="live-dot"></span>
+            System Online
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Body -->
+      <div class="crm-content-body">
+        <!-- 4 Stat Summary Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-content">
+              <span class="stat-label">Total Downloads</span>
+              <span class="stat-value" id="statDownloads">0</span>
+            </div>
+            <div class="stat-icon-wrap" style="color:var(--primary); background:var(--primary-soft);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-content">
+              <span class="stat-label">Latest Version</span>
+              <span class="stat-value" id="statVersion" style="color:var(--primary);">v2.4.0</span>
+            </div>
+            <div class="stat-icon-wrap" style="color:var(--info); background:var(--info-bg);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                </polygon>
+              </svg>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-content">
+              <span class="stat-label">Active Builds</span>
+              <span class="stat-value" id="statReleases">1</span>
+            </div>
+            <div class="stat-icon-wrap" style="color:var(--success); background:var(--success-bg);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-content">
+              <span class="stat-label">Security Audits</span>
+              <span class="stat-value" id="statAudits">0</span>
+            </div>
+            <div class="stat-icon-wrap" style="color:var(--warning); background:var(--warning-bg);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 1: Releases Manager -->
+        <section id="releasesTab" class="panel-section">
+          <div class="panel-header-row">
+            <div>
+              <h2 class="panel-title">Published Builds & APK Downloads</h2>
+              <p class="panel-subtitle">Manage APK builds linked to the live download button</p>
+            </div>
+            <button type="button" class="btn-secondary" onclick="openNewReleaseModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Upload New APK Release
+            </button>
+          </div>
+
+          <div class="table-card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Version</th>
+                  <th>Title</th>
+                  <th>Size</th>
+                  <th>Min Android</th>
+                  <th>Downloads</th>
+                  <th>Status</th>
+                  <th>Download URL / Path</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="releasesTableBody">
+                <tr>
+                  <td colspan="8" style="text-align:center; padding: 2.5rem; color:var(--text-muted);">Loading
+                    releases...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- TAB 2: Multiple Video Playlist Management -->
+        <section id="videoTab" class="panel-section" style="display: none;">
+          <div class="panel-header-row">
+            <div>
+              <h2 class="panel-title">Showcase Video Playlist</h2>
+              <p class="panel-subtitle">
+                Upload local videos or add URLs. When one video finishes, the next plays automatically.
+              </p>
+            </div>
+            <button type="button" class="btn-secondary" onclick="openNewVideoModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Add Video to Playlist
+            </button>
+          </div>
+
+          <div class="table-card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Title</th>
+                  <th>Duration</th>
+                  <th>Video URL / File</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="videosTableBody">
+                <tr>
+                  <td colspan="6" style="text-align:center; padding: 2.5rem; color:var(--text-muted);">Loading videos...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- TAB 3: Dynamic App Features -->
+        <section id="featuresTab" class="panel-section" style="display: none;">
+          <div class="panel-header-row">
+            <div>
+              <h2 class="panel-title">Dynamic App Features</h2>
+              <p class="panel-subtitle">
+                Manage the feature cards displayed on the website with customizable title, icon, and short description.
+              </p>
+            </div>
+            <button type="button" class="btn-secondary" onclick="openNewFeatureModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Add New Feature
+            </button>
+          </div>
+
+          <div class="table-card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Feature Title</th>
+                  <th>Short Description</th>
+                  <th>Icon</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="featuresTableBody">
+                <tr>
+                  <td colspan="6" style="text-align:center; padding: 2.5rem; color:var(--text-muted);">Loading
+                    features...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- TAB 3.5: Dynamic FAQs Management -->
+        <section id="faqsTab" class="panel-section" style="display: none;">
+          <div class="panel-header-row">
+            <div>
+              <h2 class="panel-title">Website FAQs Management</h2>
+              <p class="panel-subtitle">
+                Add, update or remove Frequently Asked Questions shown on the website accordion.
+              </p>
+            </div>
+            <button type="button" class="btn-secondary" onclick="openNewFaqModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Add New FAQ
+            </button>
+          </div>
+
+          <div class="table-card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Question</th>
+                  <th>Answer</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="faqsTableBody">
+                <tr>
+                  <td colspan="5" style="text-align:center; padding: 2.5rem; color:var(--text-muted);">Loading FAQs...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- TAB 4: Site Settings, Navbar Links & Telegram Link -->
+        <section id="settingsTab" class="panel-section" style="display: none;">
+          <div class="panel-header-row">
+            <div>
+              <h2 class="panel-title">Global Configuration & Navigation Bar Buttons</h2>
+              <p class="panel-subtitle">Customize website branding, top navbar buttons &amp; links, Telegram URL, and
+                footer text</p>
+            </div>
+          </div>
+
+          <div class="table-card" style="padding: 2rem; max-width: 720px;">
+            <div id="settingsAlert" class="alert-box" style="display:none; margin-bottom: 1.25rem;"></div>
+            <form onsubmit="handleSaveSettings(event)">
+              <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; color:var(--text-main);">Branding &amp;
+                Community</h3>
+
+              <div class="form-group" style="margin-bottom: 1.25rem;">
+                <label for="brandTitleInput">Brand Title (Header, Cards, Steps, Footer)</label>
+                <input type="text" id="brandTitleInput" class="input-field" value="बी - TOOL">
+              </div>
+
+              <div class="form-group" style="margin-bottom: 1.25rem;">
+                <label for="supportTextInput">Sub-heading Category</label>
+                <input type="text" id="supportTextInput" class="input-field" value="Tools • Android / PC">
+              </div>
+
+              <div class="form-group" style="margin-bottom: 1.75rem;">
+                <label for="telegramUrlInput">Telegram Community URL (Join Telegram Destination)</label>
+                <input type="text" id="telegramUrlInput" class="input-field" placeholder="https://t.me/nextlevelcheat">
+                <small style="color:var(--text-muted); font-size:0.75rem; display:block; margin-top:4px;">
+                  Controls the destination of the "Join Telegram" / "JOIN TG" buttons on the website.
+                </small>
+              </div>
+
+              <hr style="border:none; border-top:1px solid var(--border-light); margin: 1.5rem 0;">
+
+              <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; color:var(--text-main);">Top Navbar
+                Buttons &amp; Links</h3>
+
+              <!-- Nav Button 1 -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1rem;">
+                <div class="form-group">
+                  <label for="navBtn1TextInput">Nav Button 1 Text</label>
+                  <input type="text" id="navBtn1TextInput" class="input-field" value="Showcase">
+                </div>
+                <div class="form-group">
+                  <label for="navBtn1LinkInput">Nav Button 1 Link / Anchor</label>
+                  <input type="text" id="navBtn1LinkInput" class="input-field" value="#showcase">
+                </div>
+              </div>
+
+              <!-- Nav Button 2 -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1rem;">
+                <div class="form-group">
+                  <label for="navBtn2TextInput">Nav Button 2 Text</label>
+                  <input type="text" id="navBtn2TextInput" class="input-field" value="Installation">
+                </div>
+                <div class="form-group">
+                  <label for="navBtn2LinkInput">Nav Button 2 Link / Anchor</label>
+                  <input type="text" id="navBtn2LinkInput" class="input-field" value="#install">
+                </div>
+              </div>
+
+              <!-- Nav Button 3 -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1rem;">
+                <div class="form-group">
+                  <label for="navBtn3TextInput">Nav Button 3 Text</label>
+                  <input type="text" id="navBtn3TextInput" class="input-field" value="FAQ">
+                </div>
+                <div class="form-group">
+                  <label for="navBtn3LinkInput">Nav Button 3 Link / Anchor</label>
+                  <input type="text" id="navBtn3LinkInput" class="input-field" value="#faq">
+                </div>
+              </div>
+
+              <!-- Nav CTA Button Label -->
+              <div class="form-group" style="margin-bottom: 1.75rem;">
+                <label for="navTgBtnTextInput">Nav Action Button Text</label>
+                <input type="text" id="navTgBtnTextInput" class="input-field" value="Join Telegram">
+              </div>
+
+              <hr style="border:none; border-top:1px solid var(--border-light); margin: 1.5rem 0;">
+
+              <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; color:var(--text-main);">Custom Dynamic
+                Action Buttons &amp; Display Control</h3>
+
+              <!-- Toggle Section Visibility -->
+              <div class="form-group" style="margin-bottom: 1.25rem;">
+                <label for="showAppDetailsCardSelect"
+                  style="display:flex; align-items:center; justify-content:space-between;">
+                  <span>App Details &amp; Metrics Card (Under Video)</span>
+                  <span style="font-size:0.75rem; color:var(--text-muted);">Hide / Unhide Section</span>
+                </label>
+                <select id="showAppDetailsCardSelect" class="input-field">
+                  <option value="true">Visible (Show App Details, Stats &amp; Features)</option>
+                  <option value="false">Hidden (Hide App Details, Stats &amp; Features Section)</option>
+                </select>
+                <small style="color:var(--text-muted); font-size:0.75rem; display:block; margin-top:4px;">
+                  Toggle this OFF to hide the red-circled section (Title, Version, Downloads, Size, Required, Safe, and
+                  Features cards).
+                </small>
+              </div>
+
+              <!-- Master Page Sections Visibility -->
+              <div
+                style="background:var(--bg-main, #f8f9fa); border:1px solid var(--border-light, #e2e8f0); border-radius:8px; padding:1rem; margin-bottom:1.25rem;">
+                <h4 style="font-size:0.92rem; font-weight:700; margin-bottom:0.75rem; color:var(--text-main);">Master
+                  Page Sections Display Switches</h4>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.85rem; margin-bottom:0.85rem;">
+                  <div class="form-group">
+                    <label for="showTopNavSelect">Top Navigation Header</label>
+                    <select id="showTopNavSelect" class="input-field">
+                      <option value="true">Show Top Nav Header</option>
+                      <option value="false">Hide Top Nav Header</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="showFooterSelect">Bottom Footer</label>
+                    <select id="showFooterSelect" class="input-field">
+                      <option value="true">Show Footer</option>
+                      <option value="false">Hide Footer</option>
+                    </select>
+                  </div>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.85rem;">
+                  <div class="form-group">
+                    <label for="showInstallGuideSelect">Installation Guide (01, 02, 03 Steps)</label>
+                    <select id="showInstallGuideSelect" class="input-field">
+                      <option value="true">Show Installation Steps</option>
+                      <option value="false">Hide Installation Steps</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="showFaqSectionSelect">FAQ Section Accordion</label>
+                    <select id="showFaqSectionSelect" class="input-field">
+                      <option value="true">Show FAQ Section</option>
+                      <option value="false">Hide FAQ Section</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Main Hero Action Buttons Controls -->
+              <div
+                style="background:var(--bg-main, #f8f9fa); border:1px solid var(--border-light, #e2e8f0); border-radius:8px; padding:1rem; margin-bottom:1.25rem;">
+                <h4 style="font-size:0.92rem; font-weight:700; margin-bottom:0.75rem; color:var(--text-main);">Hero
+                  Buttons Controls (JOIN TG &amp; DOWNLOAD APK)</h4>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.85rem; margin-bottom:0.85rem;">
+                  <div class="form-group">
+                    <label for="showJoinTgBtnSelect">"JOIN TG" Button Display</label>
+                    <select id="showJoinTgBtnSelect" class="input-field">
+                      <option value="true">Show "JOIN TG" Button</option>
+                      <option value="false">Hide "JOIN TG" Button</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="joinTgBtnTextInput">"JOIN TG" Button Label</label>
+                    <input type="text" id="joinTgBtnTextInput" class="input-field" value="JOIN TG">
+                  </div>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.85rem;">
+                  <div class="form-group">
+                    <label for="showDownloadBtnSelect">"DOWNLOAD APK" Button Display</label>
+                    <select id="showDownloadBtnSelect" class="input-field">
+                      <option value="true">Show "DOWNLOAD APK" Button</option>
+                      <option value="false">Hide "DOWNLOAD APK" Button</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="downloadBtnTextInput">"DOWNLOAD APK" Button Label</label>
+                    <input type="text" id="downloadBtnTextInput" class="input-field" value="DOWNLOAD APK">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Top Primary Buy Key Button -->
+              <div
+                style="background:var(--bg-main, #f8f9fa); border:1px solid var(--border-light, #e2e8f0); border-radius:8px; padding:1rem; margin-bottom:1.25rem;">
+                <h4 style="font-size:0.92rem; font-weight:700; margin-bottom:0.75rem; color:var(--text-main);">Top
+                  Button: "Buy Key Yourself" (Above Action Buttons)</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+                  <div class="form-group">
+                    <label for="buyKeyBtnTextInput">Button Text</label>
+                    <input type="text" id="buyKeyBtnTextInput" class="input-field" placeholder="Buy Key Yourself">
+                  </div>
+                  <div class="form-group">
+                    <label for="buyKeyBtnLinkInput">Destination URL / Channel / Store Link</label>
+                    <input type="text" id="buyKeyBtnLinkInput" class="input-field"
+                      placeholder="https://t.me/your_bot or store link">
+                  </div>
+                </div>
+                <small style="color:var(--text-muted); font-size:0.75rem; display:block; margin-top:4px;">
+                  Leave text empty if you want to hide this button.
+                </small>
+              </div>
+
+              <!-- Secondary Custom Multi-Purpose Button -->
+              <div
+                style="background:var(--bg-main, #f8f9fa); border:1px solid var(--border-light, #e2e8f0); border-radius:8px; padding:1rem; margin-bottom:1.25rem;">
+                <h4 style="font-size:0.92rem; font-weight:700; margin-bottom:0.75rem; color:var(--text-main);">Custom
+                  Dynamic Button (Channel, File Download, etc.)</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+                  <div class="form-group">
+                    <label for="customActionBtnTextInput">Button Label</label>
+                    <input type="text" id="customActionBtnTextInput" class="input-field"
+                      placeholder="e.g. Join VIP Channel / Download Config">
+                  </div>
+                  <div class="form-group">
+                    <label for="customActionBtnLinkInput">URL / File Link / Telegram Channel</label>
+                    <input type="text" id="customActionBtnLinkInput" class="input-field"
+                      placeholder="https://t.me/channel or https://.../file.zip">
+                  </div>
+                </div>
+                <small style="color:var(--text-muted); font-size:0.75rem; display:block; margin-top:4px;">
+                  Change button label and link anytime. Leave label blank if you don't want to display it.
+                </small>
+              </div>
+
+              <hr style="border:none; border-top:1px solid var(--border-light); margin: 1.5rem 0;">
+
+              <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; color:var(--text-main);">Footer Details
+              </h3>
+              <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="footerCopyTextInput">Footer Copyright Text</label>
+                <input type="text" id="footerCopyTextInput" class="input-field"
+                value="© 2026 बी - TOOL. White + Chromium Charcoal Black Edition.">
+              </div>
+
+              <button type="submit" class="btn-primary" style="max-width: 250px;">
+                Save Navigation &amp; Site Settings
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- TAB 5: Audit Logs -->
+        <section id="auditsTab" class="panel-section" style="display: none;">
+          <div class="panel-header-row">
+            <div>
+              <h2 class="panel-title">Security & Intrusion Audit Trail</h2>
+              <p class="panel-subtitle">Real-time log of administrative actions, APK uploads and logins</p>
+            </div>
+            <button type="button" class="btn-secondary" onclick="fetchDashboardData()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+              Refresh Logs
+            </button>
+          </div>
+
+          <div class="table-card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Time (UTC)</th>
+                  <th>Admin Username</th>
+                  <th>Action</th>
+                  <th>IP Address</th>
+                  <th>Status</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody id="auditsTableBody">
+                <tr>
+                  <td colspan="6" style="text-align:center; padding: 2.5rem; color:var(--text-muted);">Loading security
+                    logs...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- TAB 6: Unlock Account Tool -->
+        <section id="unlockTab" class="panel-section" style="display: none;">
+          <div class="panel-header-row">
+            <div>
+              <h2 class="panel-title">Account Lockout Tool</h2>
+              <p class="panel-subtitle">Manually clear lockout timers for administrator accounts</p>
+            </div>
+          </div>
+
+          <div class="table-card" style="padding: 2rem; max-width: 520px;">
+            <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom: 1.25rem;">
+              When an administrator is locked out after repeated failed attempts, superadmins can manually clear the
+              timer here.
+            </p>
+            <div id="unlockAlert" class="alert-box" style="margin-bottom: 1rem;"></div>
+            <form onsubmit="handleUnlock(event)">
+              <div class="form-group" style="margin-bottom: 1.25rem;">
+                <label for="unlockUsernameInput">Locked Admin Username</label>
+                <input type="text" id="unlockUsernameInput" class="input-field" placeholder="admin" required>
+              </div>
+              <button type="submit" class="btn-primary" style="max-width: 220px;">
+                Unlock Account Now
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- TAB 7: Live Traffic Graph Analytics -->
+        <section id="analyticsTab" class="panel-section" style="display: none;">
+          <div class="panel-header-row">
+            <div>
+              <h2 class="panel-title">Real-Time Traffic &amp; Intrusion Graph</h2>
+              <p class="panel-subtitle">Real-time requests, APK downloads, and DDoS mitigation graph</p>
+            </div>
+            <button type="button" class="btn-secondary" onclick="fetchAnalyticsData()">
+              Refresh Graph
+            </button>
+          </div>
+
+          <!-- Quick Metrics Bar -->
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
+            <div class="stat-card">
+              <div class="stat-content">
+                <span class="stat-label">Total Requests</span>
+                <span class="stat-value" id="graphTotalReq">0</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-content">
+                <span class="stat-label">APK Downloads</span>
+                <span class="stat-value" id="graphTotalDl" style="color:var(--primary);">0</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-content">
+                <span class="stat-label">Attacks Blocked</span>
+                <span class="stat-value" id="graphBlocked" style="color:var(--danger-text);">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- HTML5 Canvas Visual Graph -->
+          <div class="table-card" style="padding: 1.5rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <span style="font-weight:700; font-size:0.95rem;">24-Hour Traffic Flow (Requests &amp; Downloads)</span>
+              <div style="display:flex; gap:1rem; font-size:0.8rem; font-weight:600;">
+                <span style="display:inline-flex; align-items:center; gap:5px;"><span
+                    style="width:10px; height:10px; background:#4f46e5; border-radius:2px;"></span> Requests</span>
+                <span style="display:inline-flex; align-items:center; gap:5px;"><span
+                    style="width:10px; height:10px; background:#10b981; border-radius:2px;"></span> Downloads</span>
+              </div>
+            </div>
+            <div style="width:100%; height:260px; position:relative;">
+              <canvas id="trafficCanvas" style="width:100%; height:100%; display:block;"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 8: Advanced Real SEO Engine -->
+        <section id="seoTab" class="panel-section" style="display: none;">
+          <div class="panel-header-row">
+            <div>
+              <h2 class="panel-title">SEO Engine (Search Engine Optimization)</h2>
+              <p class="panel-subtitle">Configure real Meta Title, Description, Keywords, OpenGraph &amp; Google
+                Verification to boost rankings</p>
+            </div>
+          </div>
+
+          <div class="table-card" style="padding: 2rem; max-width: 750px;">
+            <div id="seoAlert" class="alert-box" style="display:none; margin-bottom: 1.25rem;"></div>
+            <form onsubmit="handleSaveSeo(event)">
+              <div class="form-group" style="margin-bottom: 1.25rem;">
+                <label for="seoMetaTitle">SEO Meta Title (Browser &amp; Google Search Result)</label>
+                <input type="text" id="seoMetaTitle" class="input-field"
+                  placeholder="e.g. बी - TOOL | High-Precision Mobile & PC Utilities" required>
+                <small style="color:var(--text-muted); font-size:0.75rem;">Recommended: 50-60 characters for optimal
+                  Google CTR.</small>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 1.25rem;">
+                <label for="seoMetaDesc">Meta Description (Snippet in Search Engines)</label>
+                <textarea id="seoMetaDesc" class="input-field" rows="3"
+                  placeholder="Brief summary describing features, anti-ban shield, and tools..." required
+                  style="resize:vertical;"></textarea>
+                <small style="color:var(--text-muted); font-size:0.75rem;">Recommended: 120-160 characters.</small>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 1.25rem;">
+                <label for="seoMetaKeywords">Meta Keywords (Comma separated)</label>
+                <input type="text" id="seoMetaKeywords" class="input-field"
+                  placeholder="बी tool, gaming tools, zero recoil, anti-ban, android apk, pc utility">
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1.25rem;">
+                <div class="form-group">
+                  <label for="seoCanonical">Canonical URL</label>
+                  <input type="url" id="seoCanonical" class="input-field" placeholder="https://yourdomain.com/">
+                </div>
+                <div class="form-group">
+                  <label for="seoAuthor">Author / Publisher</label>
+                  <input type="text" id="seoAuthor" class="input-field" value="बी - TOOL Team">
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="seoGoogleVerify">Google Search Console Verification Token (Optional)</label>
+                <input type="text" id="seoGoogleVerify" class="input-field"
+                  placeholder="e.g. google-site-verification=xxxxxx">
+              </div>
+
+              <button type="submit" class="btn-primary" style="max-width: 250px;">
+                Save &amp; Apply SEO Settings
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- TAB 9: HIGH RISK: Telegram Security Watchdog & Weekly DB Backup -->
+        <section id="highRiskTab" class="panel-section" style="display: none;">
+          <div class="panel-header-row">
+            <div>
+              <h2 class="panel-title" style="color:var(--danger-text); display:flex; align-items:center; gap:8px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                  </path>
+                  <line x1="12" y1="9" x2="12" y2="13"></line>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                HIGH RISK: Security Watchdog &amp; Weekly Backup
+              </h2>
+              <p class="panel-subtitle">Connect Telegram Bot for clear-text attack alerts &amp; weekly automated
+                database exports</p>
+            </div>
+            <button type="button" class="btn-secondary" onclick="handleTriggerBackupNow()"
+              style="background:var(--danger-bg); border-color:var(--danger-border); color:var(--danger-text); font-weight:700;">
+              Export &amp; Send Backup Now
+            </button>
+          </div>
+
+          <div class="table-card" style="padding: 2rem; max-width: 720px; border-left: 4px solid var(--danger);">
+            <div id="highRiskAlert" class="alert-box" style="display:none; margin-bottom: 1.25rem;"></div>
+
+            <div
+              style="background:#fff1f2; border:1px solid #fecdd3; border-radius:10px; padding:1rem; margin-bottom:1.5rem; font-size:0.85rem; color:#9f1239; line-height:1.5;">
+              <strong style="display:inline-flex; align-items:center; gap:6px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                How this works:
+              </strong>
+              <ul style="margin:6px 0 0 1.25rem; padding:0;">
+                <li><strong>Instant Attack Alerts:</strong> When a DDoS attack, rate-limit burst, brute-force attempt,
+                  or admin login occurs, your Telegram Bot instantly notifies your Owner Chat ID in clear text.</li>
+                <li><strong>Automated Weekly Backup:</strong> The server exports a complete database dump every 7 days
+                  and delivers the backup file straight to your Telegram bot.</li>
+              </ul>
+            </div>
+
+            <form onsubmit="handleSaveTelegramBot(event)">
+              <div class="form-group" style="margin-bottom: 1.25rem;">
+                <label for="tgBotToken">Telegram Bot Token (From @BotFather)</label>
+                <input type="password" id="tgBotToken" class="input-field"
+                  placeholder="e.g. 7123456789:ABCdefGHIjklMNOpqrSTUvwxYZ" required autocomplete="off">
+                <small style="color:var(--text-muted); font-size:0.75rem;">Create a bot using @BotFather on Telegram and
+                  paste HTTP API Token here.</small>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 1.75rem;">
+                <label for="tgOwnerChatId">Owner Telegram Chat ID (Your Private ID)</label>
+                <input type="text" id="tgOwnerChatId" class="input-field" placeholder="e.g. 123456789" required>
+                <small style="color:var(--text-muted); font-size:0.75rem;">Find your personal Telegram User ID via
+                  @userinfobot or @raw_data_bot.</small>
+              </div>
+
+              <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                <button type="submit" class="btn-primary"
+                  style="background:#dc2626; border-color:#dc2626; max-width: 250px;">
+                  Save Bot &amp; Start Watchdog
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal 1: Add New Release -->
+  <div id="releaseModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Publish New Release (.apk File)</h3>
+        <button type="button" class="btn-close-modal" onclick="closeNewReleaseModal()">&times;</button>
+      </div>
+
+      <div id="modalAlert" class="alert-box alert-danger"></div>
+
+      <form id="newReleaseForm" onsubmit="handleCreateRelease(event)">
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label>Version Tag (e.g. v2.4.1)</label>
+          <input type="text" id="relVersion" class="input-field" placeholder="v2.4.1" required
+            pattern="^v?[0-9]+\.[0-9]+(\.[0-9]+)?.*$">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label>Title</label>
+          <input type="text" id="relTitle" class="input-field" value="Next Level Cheat APK" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label>Choose APK from Computer / Storage</label>
+          <input type="file" id="relFileInput" class="input-field" accept=".apk,application/vnd.android.package-archive"
+            required style="padding: 0.6rem; cursor: pointer;">
+          <small style="color:var(--text-muted); font-size:0.75rem; display:block; margin-top:3px;">
+            Select your signed .apk file directly. File size is calculated automatically and saved to the database.
+          </small>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label>OS Requirement</label>
+          <input type="text" id="relOs" class="input-field" value="Android 8.0+" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label>Changelog / Notes (Optional)</label>
+          <input type="text" id="relChangelog" class="input-field"
+            placeholder="Anti-ban updates, performance optimization...">
+        </div>
+
+        <button type="submit" id="relSubmitBtn" class="btn-primary">
+          Upload &amp; Publish Release
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Add Video to Playlist -->
+  <div id="videoModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Add Video from Local Storage</h3>
+        <button type="button" class="btn-close-modal" onclick="closeNewVideoModal()">&times;</button>
+      </div>
+
+      <div id="videoModalAlert" class="alert-box alert-danger"></div>
+
+      <form id="newVideoForm" onsubmit="handleCreateVideo(event)">
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label>Video Title</label>
+          <input type="text" id="vidTitle" class="input-field" placeholder="e.g. Aimbot & Recoil Demo" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label>Select Video File from Computer / Device</label>
+          <input type="file" id="vidFileInput" class="input-field"
+            accept="video/mp4,video/webm,video/ogg,video/quicktime,video/*" style="padding: 0.6rem; cursor: pointer;">
+          <small id="fileInfoText" style="color:var(--text-muted); font-size:0.75rem; display:block; margin-top:3px;">
+            Supports MP4, WebM, MOV, MKV files directly from your computer storage.
+          </small>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label>Or Paste Video URL (Optional if file selected above)</label>
+          <input type="url" id="vidUrl" class="input-field" placeholder="https://cdn.example.com/video.mp4">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1.5rem;">
+          <div class="form-group">
+            <label>Estimated Duration (Seconds)</label>
+            <input type="number" id="vidDuration" class="input-field" value="30" min="2" max="7200" required>
+          </div>
+          <div class="form-group">
+            <label>Display Order</label>
+            <input type="number" id="vidOrder" class="input-field" value="1" min="0" required>
+          </div>
+        </div>
+
+        <button type="submit" id="vidSubmitBtn" class="btn-primary">
+          Upload &amp; Add Video
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Add New App Feature -->
+  <div id="featureModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Add New App Feature</h3>
+        <button type="button" class="btn-close-modal" onclick="closeNewFeatureModal()">&times;</button>
+      </div>
+
+      <div id="featureModalAlert" class="alert-box alert-danger"></div>
+
+      <form id="newFeatureForm" onsubmit="handleCreateFeature(event)">
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label>Feature Title</label>
+          <input type="text" id="featTitle" class="input-field" placeholder="e.g. Anti-Ban 3.0" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label>Short Description</label>
+          <textarea id="featDesc" class="input-field" rows="3" placeholder="Explain the feature benefit concisely..."
+            required style="resize:vertical;"></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1.5rem;">
+          <div class="form-group">
+            <label>Icon Type</label>
+            <select id="featIcon" class="input-field">
+              <option value="check">Checkmark (Standard)</option>
+              <option value="shield">Shield (Security)</option>
+              <option value="zap">Lightning (Fast/Light)</option>
+              <option value="refresh">Refresh (Updates)</option>
+              <option value="lock">Lock (Safe)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Display Order</label>
+            <input type="number" id="featOrder" class="input-field" value="1" min="0" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          Save Feature
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Add New FAQ -->
+  <div id="faqModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Add Frequently Asked Question (FAQ)</h3>
+        <button type="button" class="btn-close-modal" onclick="closeNewFaqModal()">&times;</button>
+      </div>
+
+      <div id="faqModalAlert" class="alert-box alert-danger"></div>
+
+      <form id="newFaqForm" onsubmit="handleCreateFaq(event)">
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label>Question</label>
+          <input type="text" id="faqQuestion" class="input-field" placeholder="e.g. Is root required for बी - TOOL?"
+            required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label>Answer / Explanation</label>
+          <textarea id="faqAnswer" class="input-field" rows="4" placeholder="Detailed answer explaining to users..."
+            required style="resize:vertical;"></textarea>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label>Display Order</label>
+          <input type="number" id="faqOrder" class="input-field" value="1" min="0" required>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          Save FAQ
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/static/admin/admin.js?v=3.6.0"></script>
+</body>
+
+</html>

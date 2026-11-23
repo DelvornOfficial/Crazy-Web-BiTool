@@ -1,0 +1,96 @@
+.bi-logo-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.bi-logo-container:hover {
+  transform: scale(1.08);
+}
+
+.bi-logo-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  color: var(--logo-color, #b91c1c);
+  overflow: visible;
+  filter: drop-shadow(0 0 4px rgba(185, 28, 28, 0.45)) drop-shadow(0 0 8px rgba(153, 27, 27, 0.25));
+}
+
+/* Soundwave Equalizer Pulse Animation with 0.1 black stroke */
+.bi-logo-svg .bar {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform;
+  stroke: rgba(0, 0, 0, 0.25);
+  stroke-width: 0.8px;
+  paint-order: stroke fill;
+}
+
+.bi-logo-svg .bar-1 {
+  animation: biPulse1 1.4s ease-in-out infinite alternate;
+}
+
+.bi-logo-svg .bar-2 {
+  animation: biPulse2 1.3s ease-in-out 0.15s infinite alternate;
+}
+
+.bi-logo-svg .bar-3 {
+  animation: biPulse3 1.5s ease-in-out 0.3s infinite alternate;
+}
+
+.bi-logo-svg .bar-4 {
+  animation: biPulse2 1.35s ease-in-out 0.45s infinite alternate;
+}
+
+.bi-logo-svg .bar-5 {
+  animation: biPulse1 1.4s ease-in-out 0.2s infinite alternate;
+}
+
+@keyframes biPulse1 {
+  0% {
+    transform: scaleY(0.7);
+    opacity: 0.85;
+  }
+
+  50% {
+    transform: scaleY(1.3);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scaleY(0.6);
+    opacity: 0.8;
+  }
+}
+
+@keyframes biPulse2 {
+  0% {
+    transform: scaleY(0.85);
+  }
+
+  50% {
+    transform: scaleY(1.18);
+  }
+
+  100% {
+    transform: scaleY(0.75);
+  }
+}
+
+@keyframes biPulse3 {
+  0% {
+    transform: scaleY(0.92);
+  }
+
+  50% {
+    transform: scaleY(1.12);
+  }
+
+  100% {
+    transform: scaleY(0.85);
+  }
+}
